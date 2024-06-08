@@ -1,21 +1,17 @@
-package com.app.procesamiento_datos.config;
+package com.app.procesamiento_datos.config.jobs;
 
-import com.app.procesamiento_datos.steps.ItemProcessorStep;
-import com.app.procesamiento_datos.steps.ItemReaderSteap;
-import com.app.procesamiento_datos.steps.ItemWriterStep;
+import com.app.procesamiento_datos.steps.job1.ItemProcessorStep;
+import com.app.procesamiento_datos.steps.job1.ItemReaderSteap;
+import com.app.procesamiento_datos.steps.job1.ItemWriterStep;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@EnableBatchProcessing
-public class BatchConfiguration {
+public class Job2Configuration {
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -60,12 +56,12 @@ public class BatchConfiguration {
 
     @Bean
     public Step escribirArchivosStep() {
-        return stepBuilderFactory.get("itemWriterStep")
+        return stepBuilderFactory.get("escribirArchivosStep")
                 .tasklet(itemWriterStep())
                 .build();
     }
 
-@Bean
+    @Bean
     public Job procesarArchivoJob() {
         return jobBuilderFactory.get("procesarArchivoJob")
                 .start(leerArchivoStep())
@@ -73,6 +69,4 @@ public class BatchConfiguration {
                 .next(escribirArchivosStep())
                 .build();
     }
-
-
 }
