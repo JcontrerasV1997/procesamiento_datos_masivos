@@ -26,7 +26,7 @@ public class ItemReaderSteap implements Tasklet {
     private DataSource dataSource1;
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        log.info("__________________ Inicia Lectura__________________");
+        log.info("__________________ Inicia Lectura2__________________");
         JdbcCursorItemReader<UsuarioEntity> reader = databaseItemReader();
         reader.open(new ExecutionContext()); // Abre el lector
         List<UsuarioEntity> listaUsuario = new ArrayList<>();

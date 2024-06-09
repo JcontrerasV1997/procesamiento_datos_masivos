@@ -12,6 +12,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @EnableBatchProcessing
@@ -25,32 +26,37 @@ public class Job1Configuration {
 
 
     @Bean
+    @Primary
     @JobScope
     public ItemWriterStep itemWriterStep() {
         return new ItemWriterStep();
     }
 
     @Bean
+    @Primary
     @JobScope
     public ItemProcessorStep itemProcessorStep() {
         return new ItemProcessorStep();
     }
 
     @Bean
+    @Primary
     @JobScope
-    public ItemReaderSteap itemReaderSteap() {
+    public ItemReaderSteap itemReaderStep() {
         return new ItemReaderSteap();
     }
 
 
     @Bean
+    @Primary
     public Step leerArchivoStep() {
         return stepBuilderFactory.get("leerArchivoStep")
-                .tasklet(itemReaderSteap())
+                .tasklet(itemReaderStep())
                 .build();
     }
 
     @Bean
+    @Primary
     public Step procesarArchivoStep() {
         return stepBuilderFactory.get("procesarArchivoStep")
                 .tasklet(itemProcessorStep())
@@ -59,6 +65,7 @@ public class Job1Configuration {
 
 
     @Bean
+    @Primary
     public Step escribirArchivosStep() {
         return stepBuilderFactory.get("escribirArchivosStep")
                 .tasklet(itemWriterStep())
@@ -66,6 +73,7 @@ public class Job1Configuration {
     }
 
 @Bean
+@Primary
     public Job procesarArchivoJob() {
         return jobBuilderFactory.get("procesarArchivoJob")
                 .start(leerArchivoStep())

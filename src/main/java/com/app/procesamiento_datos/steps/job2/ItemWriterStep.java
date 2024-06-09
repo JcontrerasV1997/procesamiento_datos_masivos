@@ -26,7 +26,7 @@ public class ItemWriterStep implements Tasklet {
     /*En este paso se escriben para guardar los datos procesados en una base de datos*/
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        log.info("__________________ Inicia Escritura__________________");
+        log.info("__________________ Inicia Escritura2__________________");
 
         List<UsuarioEntity> listaDeUsuarios = (List<UsuarioEntity>) chunkContext.getStepContext()
                 .getStepExecution()

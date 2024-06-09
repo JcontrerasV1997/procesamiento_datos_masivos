@@ -18,7 +18,7 @@ public class ItemProcessorStep implements Tasklet {
     /*En este paso se procesara nuestro archivo para realizar las validaciones para convertir nombres a mayusculas y validacion del correo*/
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
-        log.info("__________________ Inicia Procesamiento__________________");
+        log.info("__________________ Inicia Procesamiento2__________________");
         List<UsuarioEntity> listaDeUsuarios = (List<UsuarioEntity>) chunkContext.getStepContext()
                 .getStepExecution()
                 .getJobExecution()
@@ -48,7 +48,6 @@ public class ItemProcessorStep implements Tasklet {
 
         return null;
     }
-
     private boolean validarCorreo(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pat = Pattern.compile(emailRegex);

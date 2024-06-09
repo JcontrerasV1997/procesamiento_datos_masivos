@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -22,7 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 public class BatchController {
     @Autowired
     private JobLauncher jobLauncher;
@@ -31,7 +32,7 @@ public class BatchController {
     private  Job job;
 
 
-    @PostMapping("/upload")
+    @PostMapping("/job1")
     public ResponseEntity<?> cargarArchivo(@RequestParam("file") MultipartFile archivo) {
 
         String nombreArchivo = archivo.getOriginalFilename();
