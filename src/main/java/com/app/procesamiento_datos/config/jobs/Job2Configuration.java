@@ -1,8 +1,8 @@
 package com.app.procesamiento_datos.config.jobs;
 
-import com.app.procesamiento_datos.steps.job2.ItemProcessorStep;
-import com.app.procesamiento_datos.steps.job2.ItemReaderSteap;
-import com.app.procesamiento_datos.steps.job2.ItemWriterStep;
+import com.app.procesamiento_datos.steps.step2.ItemProcessorStep;
+import com.app.procesamiento_datos.steps.step2.ItemReaderSteap;
+import com.app.procesamiento_datos.steps.step2.ItemWriterStep;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
