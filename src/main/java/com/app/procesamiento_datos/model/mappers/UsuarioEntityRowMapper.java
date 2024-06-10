@@ -1,4 +1,4 @@
-package com.app.procesamiento_datos.steps.job2;
+package com.app.procesamiento_datos.model.mappers;
 
 import com.app.procesamiento_datos.model.entity.UsuarioEntity;
 import org.springframework.jdbc.core.RowMapper;
