@@ -1,8 +1,8 @@
-package com.app.procesamiento_datos.config;
+package com.app.procesamiento_datos.config.jobs;
 
-import com.app.procesamiento_datos.steps.ItemProcessorStep;
-import com.app.procesamiento_datos.steps.ItemReaderSteap;
-import com.app.procesamiento_datos.steps.ItemWriterStep;
+import com.app.procesamiento_datos.steps.job2.ItemProcessorStep;
+import com.app.procesamiento_datos.steps.job2.ItemReaderSteap;
+import com.app.procesamiento_datos.steps.job2.ItemWriterStep;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -15,64 +15,60 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableBatchProcessing
-public class BatchConfiguration {
-
+public class Job2Configuration {
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
 
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
-
     @Bean
     @JobScope
-    public ItemWriterStep itemWriterStep() {
+    public ItemWriterStep itemWriterStep2() {
         return new ItemWriterStep();
     }
 
     @Bean
     @JobScope
-    public ItemProcessorStep itemProcessorStep() {
+    public ItemProcessorStep itemProcessorStep2() {
         return new ItemProcessorStep();
     }
 
     @Bean
     @JobScope
-    public ItemReaderSteap itemReaderSteap() {
+    public ItemReaderSteap itemReaderStep2() {
         return new ItemReaderSteap();
     }
 
+    @Bean
+    public Step leerArchivoStep2() {
+        return stepBuilderFactory.get("leerArchivoStep2")
+                .tasklet(itemReaderStep2())
+                .build();
+    }
 
     @Bean
-    public Step leerArchivoStep() {
-        return stepBuilderFactory.get("leerArchivoStep")
-                .tasklet(itemReaderSteap())
-                .build();
-    }
-
-    @Bean
-    public Step procesarArchivoStep() {
-        return stepBuilderFactory.get("procesarArchivoStep")
-                .tasklet(itemProcessorStep())
+    public Step procesarArchivoStep2() {
+        return stepBuilderFactory.get("procesarArchivoStep2")
+                .tasklet(itemProcessorStep2())
                 .build();
     }
 
 
     @Bean
-    public Step escribirArchivosStep() {
-        return stepBuilderFactory.get("itemWriterStep")
-                .tasklet(itemWriterStep())
+    public Step escribirArchivosStep2() {
+        return stepBuilderFactory.get("escribirArchivosStep2")
+                .tasklet(itemWriterStep2())
                 .build();
     }
 
-@Bean
-    public Job procesarArchivoJob() {
-        return jobBuilderFactory.get("procesarArchivoJob")
-                .start(leerArchivoStep())
-                .next(procesarArchivoStep())
-                .next(escribirArchivosStep())
+    @Bean
+    public Job procesarArchivoJob2() {
+        return jobBuilderFactory.get("procesarArchivoJob2")
+                .start(leerArchivoStep2())
+                .next(procesarArchivoStep2())
+                .next(escribirArchivosStep2())
                 .build();
     }
-
 
 }
