@@ -1,6 +1,7 @@
-package com.app.procesamiento_datos.steps.job2;
+package com.app.procesamiento_datos.steps.step2;
 
 import com.app.procesamiento_datos.model.entity.UsuarioEntity;
+import com.app.procesamiento_datos.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -23,6 +24,9 @@ public class ItemWriterStep implements Tasklet {
     @Qualifier("dataSource2")
     private DataSource dataSource2;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     /*En este paso se escriben para guardar los datos procesados en una base de datos*/
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -36,14 +40,8 @@ public class ItemWriterStep implements Tasklet {
 
         if (!Objects.equals(listaDeUsuarios, null)) {
             listaDeUsuarios.forEach(usuario -> log.info("Usuario: " + usuario));
-            JdbcBatchItemWriter<UsuarioEntity> writer = new JdbcBatchItemWriter<>();
-            writer.setDataSource(dataSource2);
-            writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
-            writer.setSql("INSERT INTO usuarios (id, email, nombre) VALUES (:id, :email, :nombre)");
-            writer.afterPropertiesSet();
-            writer.write(listaDeUsuarios);
+            usuarioService.guardarDatosUsuario(dataSource2,listaDeUsuarios);
         }
-
 
         return RepeatStatus.FINISHED;
     }

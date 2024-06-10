@@ -1,16 +1,14 @@
-package com.app.procesamiento_datos.steps.job1;
+package com.app.procesamiento_datos.steps.step1;
 
 import com.app.procesamiento_datos.model.entity.UsuarioEntity;
+import com.app.procesamiento_datos.service.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
-import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -23,6 +21,8 @@ public class ItemWriterStep implements Tasklet {
     @Qualifier("dataSource1")
     private DataSource dataSource1;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
 
     /*En este paso se escriben para guardar los datos procesados en una base de datos*/
     @Override
@@ -37,15 +37,8 @@ public class ItemWriterStep implements Tasklet {
 
         if (!Objects.equals(listaDeUsuarios, null)) {
             listaDeUsuarios.forEach(usuario -> log.info("Usuario: " + usuario));
-            JdbcBatchItemWriter<UsuarioEntity> writer = new JdbcBatchItemWriter<>();
-            writer.setDataSource(dataSource1);
-            writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
-            writer.setSql("INSERT INTO usuarios (id, email, nombre) VALUES (:id, :email, :nombre)");
-            writer.afterPropertiesSet();
-            writer.write(listaDeUsuarios);
+            usuarioService.guardarDatosUsuario(dataSource1,listaDeUsuarios);
         }
-
-
         return RepeatStatus.FINISHED;
     }
 }

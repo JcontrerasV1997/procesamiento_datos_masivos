@@ -1,6 +1,7 @@
-package com.app.procesamiento_datos.steps.job2;
+package com.app.procesamiento_datos.steps.step2;
 
 import com.app.procesamiento_datos.model.entity.UsuarioEntity;
+import com.app.procesamiento_datos.util.ValidarCorreo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -29,7 +30,7 @@ public class ItemProcessorStep implements Tasklet {
             List<UsuarioEntity> procesamientoFinal = listaDeUsuarios.stream().map(usuario -> {
                 try {
                     usuario.setNombre(usuario.getNombre().toUpperCase());
-                    if (!validarCorreo(usuario.getEmail())) {
+                    if (!ValidarCorreo.validarCorreo(usuario.getEmail())) {
                         throw new Exception("Email Incorrecto: " + usuario.getEmail());
                     }
                     return usuario;
@@ -48,11 +49,5 @@ public class ItemProcessorStep implements Tasklet {
 
         return null;
     }
-    private boolean validarCorreo(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pat = Pattern.compile(emailRegex);
-        if (Objects.equals(email, null))
-            return false;
-        return pat.matcher(email).matches();
-    }
+
 }
