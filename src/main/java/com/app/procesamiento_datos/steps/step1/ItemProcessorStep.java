@@ -14,6 +14,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
+
+      /*  La clase ItemProcessorStep es una implementación de la interfaz Tasklet de Spring Batch. Esta clase se utiliza para procesar una lista de entidades UsuarioEntity. En el método execute, se realiza lo siguiente:
+        Se recupera una lista de entidades UsuarioEntity del contexto de ejecución del trabajo.
+        Si la lista no es nula, se procesa cada entidad UsuarioEntity de la siguiente manera:
+        Se convierte el nombre del usuario a mayúsculas.
+        Se valida el correo electrónico del usuario utilizando el método validarCorreo de la clase ValidarCorreo. Si el correo electrónico no es válido, se lanza una excepción.
+        Después de procesar todas las entidades, se almacena la lista procesada de nuevo en el contexto de ejecución del trabajo.*/
 @Slf4j
 public class ItemProcessorStep implements Tasklet {
     /*En este paso se procesara nuestro archivo para realizar las validaciones para convertir nombres a mayusculas y validacion del correo*/
