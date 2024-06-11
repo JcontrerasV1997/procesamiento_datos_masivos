@@ -21,7 +21,15 @@ public class ItemReaderSteap implements Tasklet {
 
     /*Este Step es el paso de lectura de nuestro archivo*/
 
-
+/*
+    Esta clase ItemReaderSteap implementa la interfaz Tasklet de Spring Batch y se encarga de la lectura de datos de un archivo. En el método execute:
+    Se inicia la lectura del archivo y se abre el lector FlatFileItemReader.
+    Se crea una lista vacía listaUsuario para almacenar las entidades UsuarioEntity.
+    Se lee cada línea del archivo. Cada línea se convierte en una entidad UsuarioEntity y se agrega a la lista listaUsuario.
+    Una vez que todas las líneas del archivo han sido leídas y procesadas, se cierra el lector.
+    Finalmente, la lista listaUsuario se almacena en el contexto de ejecución del trabajo para su uso en pasos posteriores del trabajo de Spring Batch.
+    El método devuelve RepeatStatus.FINISHED para indicar que la tarea se ha completado con éxito.
+*/
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -49,7 +57,7 @@ public class ItemReaderSteap implements Tasklet {
         return RepeatStatus.FINISHED;
     }
 
-    private static FlatFileItemReader<UsuarioEntity> lecturaFlatFileItemReader() {
+    private  FlatFileItemReader<UsuarioEntity> lecturaFlatFileItemReader() {
         FlatFileItemReader<UsuarioEntity> reader = new FlatFileItemReader<UsuarioEntity>();
         reader.setResource(new ClassPathResource("files/archivo.csv"));
         reader.setLinesToSkip(1);
