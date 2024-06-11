@@ -14,6 +14,14 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Objects;
 
+
+/*La clase ItemWriterStep es una implementación de la interfaz Tasklet de Spring Batch que se encarga de la escritura de datos procesados en una base de datos. En el método execute:
+        Se recupera una lista de entidades UsuarioEntity del contexto de ejecución del trabajo.
+        Si la lista no es nula, se recorre cada entidad UsuarioEntity y se imprime en el log.
+        Luego, se llama al método guardarDatosUsuario del servicio UsuarioServiceImpl para guardar los datos de los usuarios en la base de datos utilizando el DataSource inyectado.
+        Finalmente, el método devuelve RepeatStatus.FINISHED para indicar que la tarea se ha completado con éxito.
+        Esta clase es parte de un paso en un trabajo de Spring Batch, donde se realiza la escritura de los datos procesados en la base de datos.*/
+
 @Slf4j
 public class ItemWriterStep implements Tasklet {
 
